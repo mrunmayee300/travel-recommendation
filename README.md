@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Travel Recommendation Web App (Backend API)
 
 FastAPI backend for travel recommendations, itineraries, and nearby expansions. Aligned with the “Explorer’s Journal” experience.
@@ -63,3 +64,6 @@ uvicorn app.main:app --reload
 - Future: replace JSON loader with DB models and persistence.
 
 
+=======
+# travel-recommendation
+>>>>>>> cff470b2ac857bf2ee68e18aec7bd89ba5c67417
