@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+.dark :root {
+  color-scheme: dark;
+}
+
+body {
+  font-family: theme("fontFamily.body");
+  background: linear-gradient(180deg, #f4ede1 0%, #f9f5ee 50%, #f4ede1 100%);
+  color: theme("colors.charcoal");
+}
+
+.dark body {
+  background: radial-gradient(circle at top left, #2a332c 0%, #1d2420 40%, #111 100%);
+  color: #f1f0eb;
+}
+
+.card {
+  @apply bg-white/90 dark:bg-olive/80 rounded-2xl shadow-soft border border-white/60 dark:border-olive/40 backdrop-blur;
+}
+
+.pill {
+  @apply inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm font-medium bg-forest/10 text-forest dark:bg-amber/15 dark:text-amber;
+}
+
+.btn {
+  @apply inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl font-semibold transition transform active:scale-[0.99];
+}
+
+.btn-primary {
+  @apply btn bg-forest text-white shadow-soft hover:bg-forest/90;
+}
+
+.btn-ghost {
+  @apply btn bg-white/60 text-charcoal border border-black/5 hover:bg-white dark:bg-olive dark:text-white dark:border-white/5;
+}
+
+.section {
+  @apply max-w-6xl mx-auto px-6 md:px-10;
+}
+
+.animate-fade-in {
+  animation: fade-in 260ms ease-out;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c6b299;
+  border-radius: 9999px;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #4b554f;
+}
+
+

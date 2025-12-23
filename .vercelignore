@@ -1,0 +1,9 @@
+app/
+scripts/
+requirements.txt
+travel_india.db
+*.pyc
+__pycache__/
+.env
+.venv/
+
