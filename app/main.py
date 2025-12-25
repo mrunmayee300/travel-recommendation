@@ -95,5 +95,8 @@ def get_meta() -> Dict[str, Any]:
         "app": settings.app_name,
         "env": settings.env,
     }
+@app.get("/")
+def root():
+    return {"status": "ok", "message": "Travel Recommendation API active"}
 
 

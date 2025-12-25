@@ -8,7 +8,27 @@
 
 ---
 
-## PART 1: Deploy Backend to Railway
+## PART 1: Deploy Backend (Choose One)
+
+### Option A: Railway (Original)
+See steps below.
+
+### Option B: Render.com (Recommended Alternative)
+See `BACKEND_ALTERNATIVES.md` for full guide, or:
+
+1. Go to https://render.com
+2. New Web Service → Connect GitHub
+3. Build Command: `pip install -r requirements.txt && python scripts/import_india_data.py`
+4. Start Command: `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
+5. Add env var: `CORS_ALLOW_ORIGINS=https://your-app.vercel.app,https://*.vercel.app`
+6. Deploy!
+
+### Option C: Other Alternatives
+See `BACKEND_ALTERNATIVES.md` for Fly.io, PythonAnywhere, Heroku, DigitalOcean, Cloud Run.
+
+---
+
+## PART 1A: Deploy Backend to Railway
 
 ### Step 1: Push Code to GitHub
 ```bash

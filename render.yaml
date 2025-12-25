@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: travel-recommendation-api
+    env: python
+    buildCommand: pip install -r requirements.txt && python scripts/import_india_data.py
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: CORS_ALLOW_ORIGINS
+        value: https://your-app.vercel.app,https://*.vercel.app
+      - key: APP_ENV
+        value: production
+    healthCheckPath: /api/health
+
