@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTrip, Destination } from "../state/TripContext";
-
-const API_BASE = (import.meta as any).env?.VITE_API_BASE ?? "http://localhost:8000/api";
+import { apiUrl } from "../config/api";
 
 export function RecommendationsPage() {
   const navigate = useNavigate();
@@ -21,7 +20,7 @@ export function RecommendationsPage() {
       setLoading(true);
       setError(null);
       try {
-        const res = await fetch(`${API_BASE}/recommend-destinations`, {
+        const res = await fetch(apiUrl("recommend-destinations"), {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(preferences),

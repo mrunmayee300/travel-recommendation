@@ -10,15 +10,11 @@ from fastapi.middleware.cors import CORSMiddleware
 # Configuration
 # -----------------------------------------------------------------------------
 
-
 class Settings:
     """Application settings loaded from environment."""
 
     app_name: str = os.getenv("APP_NAME", "Travel Recommendation API")
     env: str = os.getenv("APP_ENV", "development")
-    allow_origins: str = os.getenv("CORS_ALLOW_ORIGINS", "*")
-    allow_methods: str = os.getenv("CORS_ALLOW_METHODS", "GET,POST,PUT,DELETE,OPTIONS")
-    allow_headers: str = os.getenv("CORS_ALLOW_HEADERS", "*")
 
 
 @lru_cache()
@@ -30,7 +26,6 @@ def get_settings() -> Settings:
 # Application factory
 # -----------------------------------------------------------------------------
 
-
 def create_app() -> FastAPI:
     settings = get_settings()
     app = FastAPI(
@@ -40,7 +35,7 @@ def create_app() -> FastAPI:
     )
 
     configure_logging(settings)
-    configure_cors(app, settings)
+    configure_cors(app)
     register_routes(app)
 
     return app
@@ -55,25 +50,35 @@ def configure_logging(settings: Settings) -> None:
     logging.getLogger("uvicorn.access").setLevel(logging.INFO)
 
 
-def configure_cors(app: FastAPI, settings: Settings) -> None:
-    origins = [origin.strip() for origin in settings.allow_origins.split(",") if origin]
-    methods = [method.strip() for method in settings.allow_methods.split(",") if method]
-    headers = [header.strip() for header in settings.allow_headers.split(",") if header]
+def configure_cors(app: FastAPI) -> None:
+    # Get CORS origins from environment or use defaults
+    cors_origins_env = os.getenv("CORS_ALLOW_ORIGINS", "")
+    
+    if cors_origins_env:
+        # Split by comma and strip whitespace
+        origins = [origin.strip() for origin in cors_origins_env.split(",") if origin.strip()]
+    else:
+        # Default origins - allow all for development
+        origins = ["*"]
+    
+    # For production, allow specific origins
+    # If "*" is in the list, allow all origins
+    allow_all = "*" in origins or len(origins) == 0
 
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=origins or ["*"],
+        allow_origins=origins if not allow_all else ["*"],
         allow_credentials=True,
-        allow_methods=methods or ["*"],
-        allow_headers=headers or ["*"],
+        allow_methods=["*"],
+        allow_headers=["*"],
     )
 
 
 def register_routes(app: FastAPI) -> None:
     from app.routes.health import router as health_router
+    from app.routes.recommendations import router as recommendations_router
     from app.routes.itinerary import router as itinerary_router
     from app.routes.nearby import router as nearby_router
-    from app.routes.recommendations import router as recommendations_router
 
     app.include_router(health_router, prefix="/api")
     app.include_router(recommendations_router, prefix="/api")
@@ -83,10 +88,10 @@ def register_routes(app: FastAPI) -> None:
 
 app = create_app()
 
-# -----------------------------------------------------------------------------
-# Metadata endpoint for debugging
-# -----------------------------------------------------------------------------
 
+# -----------------------------------------------------------------------------
+# Metadata + Debug Endpoints
+# -----------------------------------------------------------------------------
 
 @app.get("/api/meta", tags=["meta"])
 def get_meta() -> Dict[str, Any]:
@@ -95,8 +100,8 @@ def get_meta() -> Dict[str, Any]:
         "app": settings.app_name,
         "env": settings.env,
     }
+
+
 @app.get("/")
 def root():
     return {"status": "ok", "message": "Travel Recommendation API active"}
-
-

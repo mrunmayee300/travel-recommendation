@@ -35,7 +35,7 @@ type NearbySuggestion = {
   notes: string;
 };
 
-const API_BASE = (import.meta as any).env?.VITE_API_BASE ?? "http://localhost:8000/api";
+import { apiUrl } from "../config/api";
 
 export function ItineraryPage() {
   const navigate = useNavigate();
@@ -72,7 +72,7 @@ export function ItineraryPage() {
             : preferences.tags,
           pace: "moderate", // Default pace since removed from UI
         };
-        const res = await fetch(`${API_BASE}/generate-itinerary`, {
+        const res = await fetch(apiUrl("generate-itinerary"), {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
@@ -89,7 +89,7 @@ export function ItineraryPage() {
 
     const fetchNearby = async () => {
       try {
-        const res = await fetch(`${API_BASE}/nearby-expansions`, {
+        const res = await fetch(apiUrl("nearby-expansions"), {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -124,7 +124,7 @@ export function ItineraryPage() {
             Your Explorer&apos;s Journal for {selectedDestination.name}
           </h2>
           <p className="text-sm text-black/70 dark:text-white/70 max-w-2xl">
-            A soft, day-wise plan in INR, with nearby expansions for when the journey asks for a little more.
+            A soft, day-wise plan, with nearby expansions for when the journey asks for a little more.
           </p>
         </div>
         <button
