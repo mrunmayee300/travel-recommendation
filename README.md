@@ -1,69 +1,64 @@
-<<<<<<< HEAD
-# Travel Recommendation Web App (Backend API)
+*Travel Recommendation and Itinerary Planner (India)*
+This project is a full-stack web application that recommends travel destinations in India based on user preferences and generates a customized itinerary with a map view of tourist attractions.
 
-FastAPI backend for travel recommendations, itineraries, and nearby expansions. Aligned with the “Explorer’s Journal” experience.
+Features:
+Multi-step travel planning workflow
+Destination recommendations based on:
+Region
+Climate
+Interests
+Budget level
 
-## Stack
-- FastAPI + Uvicorn
-- scikit-learn (content-based similarity)
-- Pydantic models
-- Sample data via JSON (swap to DB later)
+Trip customization:
+Number of days
+Daily budget
+Interest refinement
+Day-wise itinerary generation
+Map visualization of key attractions
+Suggestions for nearby tourist spots for extra time/budget
+Fully responsive and supports light/dark mode
 
-## Setup
-```bash
-python -m venv .venv
-source .venv/bin/activate  # or .venv\Scripts\activate on Windows
-pip install -r requirements.txt
-uvicorn app.main:app --reload
-```
+Tech Stack:
+Frontend:
+React + Vite
+Tailwind CSS
+React Router DOM
+Leaflet (Map rendering)
 
-## Endpoints
-- `GET /api/health` — health check
-- `GET /api/meta` — app metadata
-- `POST /api/recommend-destinations` — content-based destination ranking
-- `POST /api/generate-itinerary` — itinerary generation (day-wise activities)
-- `POST /api/nearby-expansions` — nearby destination suggestions
+Backend:
+FastAPI (Python)
+Render for deployment
 
-## Request Examples
+Deployment:
+Frontend: Vercel
+Backend: Render
 
-### Recommend destinations
-```json
-{
-  "tags": ["culture", "food"],
-  "budget_level": "mid",
-  "climate": "warm",
-  "crowd_level": "medium",
-  "top_k": 3
-}
-```
+Application Workflow:
+User selects preferences (budget, climate, interests, region)
+App recommends suitable destinations in India
+User selects a destination and customizes trip details
+App generates a day-wise itinerary with attraction recommendations and map view
+Suggestions for nearby places if time/budget allow
 
-### Generate itinerary
-```json
-{
-  "destination_id": 1,
-  "days": 3,
-  "budget": 600,
-  "interests": ["culture", "food"],
-  "pace": "moderate"
-}
-```
+API Endpoints:
+Functionality	Method	Endpoint
+Health check	GET	/api/health
+Metadata	GET	/api/meta
+Destination recommendation	POST	/api/recommend-destinations
+Itinerary generation	POST	/api/generate-itinerary
+Nearby attractions	POST	/api/nearby
 
-### Nearby expansions
-```json
-{
-  "destination_id": 1,
-  "extra_days": 2,
-  "extra_budget": 500,
-  "radius_km": 400
-}
-```
+Screenshots of each part of the workflow are included in the repository for reference:
+Preferences page
+<img width="1530" height="901" alt="image" src="https://github.com/user-attachments/assets/d6c1f7c2-1a0b-46d2-9dfb-14b2b9987904" />
 
-## Notes
-- Sample data lives in `app/data/sample_data.json`.
-- ML logic resides in `app/ml/recommender.py`; itinerary logic in `app/services/itinerary.py`; nearby suggestions in `app/services/nearby.py`.
-- Future: replace JSON loader with DB models and persistence.
+Destination recommendations page
+<img width="1710" height="597" alt="image" src="https://github.com/user-attachments/assets/48d3c02c-a514-4632-84ce-c89482cd7aa0" />
+
+Customization page
+<img width="1545" height="608" alt="image" src="https://github.com/user-attachments/assets/4425c1ad-41fc-44b0-a75d-bd491b1a43ce" />
+
+Itinerary and map view
+<img width="1646" height="944" alt="image" src="https://github.com/user-attachments/assets/93d9050b-e708-410b-aaaf-fa4a7a8d390e" />
 
 
-=======
-# travel-recommendation
->>>>>>> cff470b2ac857bf2ee68e18aec7bd89ba5c67417
